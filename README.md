@@ -61,31 +61,34 @@ Open your browser: Navigate to http://localhost:3000 to see NaimurBot in action!
 
 ## 🌐 Live Demo
 
-## 🔗 NaimurBot Live
+## 🔗 [NaimurBot Live](https://naimurbot.netlify.app/)
 
 ## 🛠️ Technologies Used
 
-Next.js – React framework for SSR & optimized performance.
-Tailwind CSS – Utility-first styling for a modern UI.
-API Handling – Fetching and processing chatbot responses.
-Local Storage – Saves and loads chat history.
+<ul style="font-family: 'Courier New', monospace; font-weight: 300;">
+<li>Next.js – React framework for SSR & optimized performance.</li>
+<li>Tailwind CSS – Utility-first styling for a modern UI.</li>
+<li>API Handling – Fetching and processing chatbot responses.</li>
+<li>Local Storage – Saves and loads chat history.</li>
+</ul>
 
 ## 📊 Performance & SEO
 
-NaimurBot is optimized for performance and SEO, ensuring fast load times and high search engine rankings. Key performance features include:
-
-Code Splitting: Efficiently load only the necessary code.
-
-Image Optimization: Next.js built-in image optimization for faster loading.
-
-SEO Best Practices: Proper use of meta tags, alt attributes, and semantic HTML.
+<ul style="font-family: 'Courier New', monospace; font-weight: 300;">
+<li>NaimurBot is optimized for performance and SEO, ensuring fast load times and high search engine rankings. Key performance features include:</li>
+<li>Code Splitting: Efficiently load only the necessary code.</li>
+<li>Image Optimization: Next.js built-in image optimization for faster loading.</li>
+<li>SEO Best Practices: Proper use of meta tags, alt attributes, and semantic HTML.</li>
+</ul>
 
 ## 📌 Roadmap & Future Enhancements
 
-Dark Mode Support 🌙
-More AI Model Options 🧠
-User Authentication for Personalized Chat 🔐
-Export Chat History Feature 📜
+<ul style="font-family: 'Courier New', monospace; font-weight: 300;">
+<li>Dark Mode Support 🌙</li>
+<li>More AI Model Options 🧠</li>
+<li>User Authentication for Personalized Chat 🔐</li>
+<li>Export Chat History Feature 📜</li>
+</ul>
 
 ## 💙 Support & Contribute
 
