@@ -1,101 +1,151 @@
-import Image from "next/image";
+'use client';
+import { useEffect, useState } from 'react';
+import { BiSolidMessageAdd } from "react-icons/bi";
+import { FaArrowUp } from "react-icons/fa";
+const page = () => {
+  const [input,setInput]=useState('');
+  const [messages,setMessages]=useState([]);
+  const [messageHistory,setMessageHistory]=useState([]);
+  const [isLoading,setIsLoading]=useState(false);
+  const [isError,setIsError]=useState(false);
 
-export default function Home() {
+
+const apiKey=process.env.ECHOGPT_API_KEY;
+
+
+// handle chat history
+useEffect(()=>{
+      localStorage.setItem('messageHistory',JSON.stringify(messageHistory));
+},[messageHistory]);
+
+
+useEffect(()=>{
+     const savedHistory=localStorage.getItem('messageHistory');
+     if (savedHistory) {
+      setMessageHistory(JSON.parse(savedHistory))
+     }
+},[])
+
+
+  const handleSubmit=async (e) =>{
+    e.preventDefault();
+    try{
+      // Add User Message
+      const userMessage={
+        role:'user',
+        content:input,
+        timestamp:Date.now()
+      }
+      const updatedMessages=[...messages,userMessage];
+      setMessages(updatedMessages);
+      setInput('');
+      setIsLoading(true);
+      setIsError('');
+      // Api Call & handle response
+   const response=await fetch('https://api.echogpt.live/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey
+      },
+      body: JSON.stringify({
+          messages: [{ role: 'system', content: 'You are a helpful assistant.' }],
+          "model": "EchoGPT"
+      })
+  })
+  const data=await response.json();
+  
+
+  // Add Assistant Message
+  const assistantMessage={
+    role:'system',
+        content:data.choices[0].message.content ,
+        timestamp:Date.now()
+  }
+  setMessages(prev=>[...prev,assistantMessage]);
+  // Update Message History
+  if (updatedMessages.length>0) {
+    setMessageHistory(prev=>[...prev, {
+      id : Date.now().toString(),
+      title:input.substring(0,50),
+      message:[userMessage,assistantMessage]
+    }])
+  }
+  //console.log(messageHistory);
+  
+  setIsLoading(false)
+    }
+    
+catch(error){
+  console.log('Error found',error);
+  
+}
+  }
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className='bg-gradient-to-b   from-[#f8f5f2] from-0%  to-[#fdeee1] to-100% flex h-screen'>
+      {/* Sidebar */}
+      <div className='w-64 bg-amber-50 border-r-2 border-amber-200'>
+        {/* history */}
+        <div className=' flex flex-col '>
+          <div className=' flex items-center justify-between p-2 space-x-2'>
+          <h1 className=' text-[26px] text-black font-bold'>EchoGPT</h1>
+          <div className='flex items-center space-x-1 hover:bg-amber-300 rounded-2xl bg-amber-100 p-2 cursor-pointer'>
+          <span><BiSolidMessageAdd /></span>
+          <button className='  font-semibold cursor-pointer' onClick={()=>setMessages([])}> New Chat</button>
+          </div>
+          </div>
+          <div className='space-y-2'>
+            {
+              messageHistory.map((history)=>(
+                <div key={history.id} className='p-3 hover:bg-amber-300 rounded-lg cursor-pointer transition-colors' onClick={()=>setMessages(history.message)}>
+                  <p className=' truncate'>{history.title}</p>
+                  <span className='text-xs text-gray-400'>{new Date(history.message[0].timestamp).toLocaleDateString()}</span>
+                </div>
+              ))
+            }
+          </div>
+          
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      {/* Main Chat Area */}
+      <div className='flex flex-col flex-1'>
+        {/* message area */}
+        <div className='flex-1  overflow-y-auto p-4 space-y-4'>
+          {
+            messages.map((message,index)=>(
+              <div key={index} className={`flex gap-2 p-4 ${message.role === 'user'?'justify-end':' justify-start'}  `}>
+              <div className={`max-w-3xl p-4 rounded-lg ${message.role === 'user'?'bg-amber-200 rounded-br-none':' bg-amber-300 rounded-bl-none'}`}>
+            <p className='text-sm whitespace-pre-wrap '>{message.content}</p>
+            
+            <span className=' text-xs mt-1 block text-right opacity-75'>{new Date(message.timestamp).toLocaleTimeString()}</span>
+            </div>
+            </div>
+            ))
+          }
+          {
+            isLoading && (
+              <div>
+                <p>loading..</p>
+              </div>
+            )
+          }
+          
+        </div>
+        <div className='flex justify-center'>
+        <form onSubmit={handleSubmit} className='w-1/2 drop-shadow-2xl bg-[#f8f1ea] p-4 rounded-full border-t border-white mb-8 '>
+          <div className='flex space-x-2'>
+            <input 
+            onChange={(e)=>setInput(e.target.value)} 
+            value={input} 
+            disabled={isLoading}
+            className='w-full bg-white p-2 rounded-full focus:outline-0 disabled:cursor-not-allowed disabled:opacity-50' type='text' placeholder='Ask Anything'></input>
+            <button className='text-white bg-black p-2 size-8 rounded-full hover:bg-amber-300 hover:text-black cursor-pointer'><FaArrowUp /></button>
+          </div>
+        </form>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default page;
