@@ -2,12 +2,14 @@
 import { useEffect, useState } from 'react';
 import { BiSolidMessageAdd } from "react-icons/bi";
 import { FaArrowUp } from "react-icons/fa";
+import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
 const Page = () => {
   const [input,setInput]=useState('');
   const [messages,setMessages]=useState([]);
   const [messageHistory,setMessageHistory]=useState([]);
   const [isLoading,setIsLoading]=useState(false);
   const [isError,setIsError]=useState(false);
+  const [showSidebar,setShowSidebar]=useState(true);
 
 
 const apiKey=process.env.ECHOGPT_API_KEY;
@@ -82,9 +84,9 @@ catch(error){
 }
   }
   return (
-    <div className='bg-gradient-to-b   from-[#f8f5f2] from-0%  to-[#fdeee1] to-100% flex h-screen'>
+    <div className='bg-gradient-to-b   from-[#f8f5f2] from-0%  to-[#fdeee1] to-100% flex flex-col md:flex-row h-screen'>
       {/* Sidebar */}
-      <div className='w-64 bg-amber-50 border-r-2 border-amber-200'>
+      <div className='w-64 bg-amber-50 border-r-2 border-amber-200 md:block hidden'>
         {/* history */}
         <div className=' flex flex-col '>
           <div className=' flex items-center justify-between p-2 space-x-2'>
@@ -107,6 +109,14 @@ catch(error){
           
         </div>
       </div>
+      
+       {/* responsive sidebar */}
+       <div className='flex md:hidden justify-between p-4'>
+        <button className=' text-2xl text-black font-bold'><HiOutlineBars3BottomLeft/></button>
+        <h1 className=' text-2xl text-black font-bold'>EchoGPT</h1>
+        <button className=' text-2xl text-black font-bold' onClick={()=>setMessages([])}><BiSolidMessageAdd /></button>
+       </div>
+        
       {/* Main Chat Area */}
       <div className='flex flex-col flex-1'>
         {/* message area */}
@@ -132,7 +142,7 @@ catch(error){
           
         </div>
         <div className='flex justify-center'>
-        <form onSubmit={handleSubmit} className='w-1/2 drop-shadow-2xl bg-[#f8f1ea] p-4 rounded-full border-t border-white mb-8 '>
+        <form onSubmit={handleSubmit} className='md:w-1/2 w-full  drop-shadow-2xl bg-[#f8f1ea] p-4 rounded-full border-t border-white mb-8 '>
           <div className='flex space-x-2'>
             <input 
             onChange={(e)=>setInput(e.target.value)} 
