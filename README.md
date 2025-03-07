@@ -1,28 +1,33 @@
-NaimurBot
+# NaimurBot
+
 🚀 Welcome to NaimurBot, the Next.js-powered AI Chatbot! 🚀
 
-🖥️ Project Overview
-NaimurBot is a dynamic and responsive AI chatbot built using Next.js and styled with Tailwind CSS. This project showcases smooth animations, a beautiful gradient background, and advanced features like API integration, local storage, a sidebar, and chat history.
+## 🖥️ Project Overview
 
-🎨 Design & UI
-Next.js: Robust framework for building server-rendered React applications.
+NaimurBot is a dynamic and responsive AI chatbot built using **Next.js** and styled with **Tailwind CSS**. This project showcases smooth animations, a beautiful gradient background, and advanced features like API integration, local storage, a sidebar, and chat history.
 
-Tailwind CSS: Utility-first CSS framework for rapid UI development.
+![Font Awesome Icon](https://img.icons8.com/ios-filled/50/000000/github.png) GitHub
 
-Gradient Background: Eye-catching and visually appealing gradient designs.
+## 🎨 Design & UI
 
-Animations: Smooth and engaging animations for an enhanced user experience.
+<p style="font-family: Arial, sans-serif; font-weight: bold;">
+  - Next.js: Robust framework for building server-rendered React applications.
+  - Tailwind CSS: Utility-first CSS framework for rapid UI development.
+  - Gradient Background: Eye-catching and visually appealing gradient designs.
+  - Animations: Smooth and engaging animations for an enhanced user experience.
+</p>
 
-🔧 Features
-API Integration: Seamless handling of API requests and responses.
+## 🔧 Features
 
-Local Storage: Persistent storage for user data and preferences.
+<p style="font-family: 'Courier New', monospace; font-weight: 300;">
+  - API Integration: Seamless handling of API requests and responses.
+  - Local Storage: Persistent storage for user data and preferences.
+  - Sidebar: Convenient and accessible navigation.
+  - History: Keeping track of chat history for a continuous conversation experience.
+</p>
 
-Sidebar: Convenient and accessible navigation.
+## 🚀 Getting Started
 
-History: Keeping track of chat history for a continuous conversation experience.
-
-🚀 Getting Started
 Follow these steps to get started with NaimurBot:
 
 1. Clone the repository:
