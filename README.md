@@ -6,8 +6,6 @@
 
 NaimurBot is a dynamic and responsive AI chatbot built using **Next.js** and styled with **Tailwind CSS**. This project showcases smooth animations, a beautiful gradient background, and advanced features like API integration, local storage, a sidebar, and chat history.
 
-![Font Awesome Icon](https://img.icons8.com/ios-filled/50/000000/github.png) GitHub
-
 ## 🎨 Design & UI
 
 <ul style="font-family: Arial, list-type:bullet, sans-serif; font-weight: bold;">
