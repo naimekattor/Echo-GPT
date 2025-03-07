@@ -85,7 +85,7 @@ catch(error){
 }
   }
   return (
-    <div className='bg-gradient-to-b   from-[#f8f5f2] from-0%  to-[#fdeee1] to-100% flex flex-col md:flex-row h-screen'>
+    <div className='bg-gradient-to-b   from-[#f8f5f2] from-0%  to-[#fdeee1] to-100% flex flex-col md:flex-row h-full'>
       {/* Sidebar */}
       <div className='w-64 bg-amber-50 border-r-2 border-amber-200 md:block hidden'>
         {/* history */}
