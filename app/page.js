@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { BiSolidMessageAdd } from "react-icons/bi";
 import { FaArrowUp } from "react-icons/fa";
-const page = () => {
+const Page = () => {
   const [input,setInput]=useState('');
   const [messages,setMessages]=useState([]);
   const [messageHistory,setMessageHistory]=useState([]);
@@ -148,4 +148,4 @@ catch(error){
   );
 };
 
-export default page;
+export default Page;
