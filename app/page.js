@@ -31,6 +31,7 @@ useEffect(()=>{
 
   const handleSubmit=async (e) =>{
     e.preventDefault();
+    if (!input.trim() || isLoading) return;
     try{
       // Add User Message
       const userMessage={
@@ -116,25 +117,32 @@ catch(error){
         <h1 className=' text-2xl text-black font-bold'>EchoGPT</h1>
         <button className=' text-2xl text-black font-bold' onClick={()=>setMessages([])}><BiSolidMessageAdd /></button>
        </div>
-       <div className={` w-36 bg-[#f7f1eb] h-screen fixed z-10 ${showSidebar?' -translate-x-full':'translate-x-0 '} md:hidden transition-transform duration-300`}>
-       <div className=' flex flex-col '>
-          <div className=' flex items-center justify-between p-2 space-x-2'>
-          <button className= {`text-2xl text-black font-bold`} onClick={()=>setShowSidebar(!showSidebar)}><HiOutlineBars3BottomLeft/></button>
-          <button className=' text-2xl text-black font-bold' onClick={()=>setMessages([])}><BiSolidMessageAdd /></button>
+       <div className={`w-36 bg-[#f7f1eb] h-screen fixed z-10  ${showSidebar?' translate-x-0':' -translate-x-full'} transition-transform duration-300`}>
+       {
+        showSidebar && (
+          <div >
+          <div className=' flex flex-col '>
+             <div className=' flex items-center justify-between p-2 space-x-2'>
+             <button className= {`text-2xl text-black font-bold`} onClick={()=>setShowSidebar(!showSidebar)}><HiOutlineBars3BottomLeft/></button>
+             <button className=' text-2xl text-black font-bold' onClick={()=>setMessages([])}><BiSolidMessageAdd /></button>
+             </div>
+             <div className='space-y-2'>
+               {
+                 messageHistory.map((history)=>(
+                   <div key={history.id} className='p-3 hover:bg-amber-300 rounded-lg cursor-pointer transition-colors' onClick={()=>setMessages(history.message)}>
+                     <p className=' truncate'>{history.title}</p>
+                     <span className='text-xs text-black'>{new Date(history.message[0].timestamp).toLocaleDateString()}</span>
+                   </div>
+                 ))
+               }
+             </div>
+             
+           </div>
           </div>
-          <div className='space-y-2'>
-            {
-              messageHistory.map((history)=>(
-                <div key={history.id} className='p-3 hover:bg-amber-300 rounded-lg cursor-pointer transition-colors' onClick={()=>setMessages(history.message)}>
-                  <p className=' truncate'>{history.title}</p>
-                  <span className='text-xs text-black'>{new Date(history.message[0].timestamp).toLocaleDateString()}</span>
-                </div>
-              ))
-            }
-          </div>
-          
-        </div>
+        )
+       }
        </div>
+       
         
       {/* Main Chat Area */}
       <div className='flex flex-col flex-1'>
@@ -153,9 +161,21 @@ catch(error){
           }
           {
             isLoading && (
-              <div>
-                <p>loading..</p>
-              </div>
+              <div class="mx-auto w-full max-w-sm rounded-md border border-blue-300 p-4">
+  <div class="flex animate-pulse space-x-4">
+    <div class="size-10 rounded-full bg-gray-200"></div>
+    <div class="flex-1 space-y-6 py-1">
+      <div class="h-2 rounded bg-gray-200"></div>
+      <div class="space-y-3">
+        <div class="grid grid-cols-3 gap-4">
+          <div class="col-span-2 h-2 rounded bg-gray-200"></div>
+          <div class="col-span-1 h-2 rounded bg-gray-200"></div>
+        </div>
+        <div class="h-2 rounded bg-gray-200"></div>
+      </div>
+    </div>
+  </div>
+</div>
             )
           }
           
