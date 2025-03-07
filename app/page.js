@@ -9,7 +9,7 @@ const Page = () => {
   const [messageHistory,setMessageHistory]=useState([]);
   const [isLoading,setIsLoading]=useState(false);
   const [isError,setIsError]=useState(false);
-  const [showSidebar,setShowSidebar]=useState(true);
+  const [showSidebar,setShowSidebar]=useState(false);
 
 
 const apiKey=process.env.ECHOGPT_API_KEY;
@@ -112,9 +112,28 @@ catch(error){
       
        {/* responsive sidebar */}
        <div className='flex md:hidden justify-between p-4'>
-        <button className=' text-2xl text-black font-bold'><HiOutlineBars3BottomLeft/></button>
+        <button className=' text-2xl text-black font-bold' onClick={()=>setShowSidebar(!showSidebar)}><HiOutlineBars3BottomLeft/></button>
         <h1 className=' text-2xl text-black font-bold'>EchoGPT</h1>
         <button className=' text-2xl text-black font-bold' onClick={()=>setMessages([])}><BiSolidMessageAdd /></button>
+       </div>
+       <div className={` w-36 bg-[#f7f1eb] h-screen fixed z-10 ${showSidebar?' -translate-x-full':'translate-x-0 '} md:hidden transition-transform duration-300`}>
+       <div className=' flex flex-col '>
+          <div className=' flex items-center justify-between p-2 space-x-2'>
+          <button className= {`text-2xl text-black font-bold`} onClick={()=>setShowSidebar(!showSidebar)}><HiOutlineBars3BottomLeft/></button>
+          <button className=' text-2xl text-black font-bold' onClick={()=>setMessages([])}><BiSolidMessageAdd /></button>
+          </div>
+          <div className='space-y-2'>
+            {
+              messageHistory.map((history)=>(
+                <div key={history.id} className='p-3 hover:bg-amber-300 rounded-lg cursor-pointer transition-colors' onClick={()=>setMessages(history.message)}>
+                  <p className=' truncate'>{history.title}</p>
+                  <span className='text-xs text-black'>{new Date(history.message[0].timestamp).toLocaleDateString()}</span>
+                </div>
+              ))
+            }
+          </div>
+          
+        </div>
        </div>
         
       {/* Main Chat Area */}
