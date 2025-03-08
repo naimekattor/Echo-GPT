@@ -180,7 +180,7 @@ catch(error){
           }
           
         </div>
-        <div className='flex justify-center'>
+        <div className='flex justify-center mb-6'>
         <form onSubmit={handleSubmit} className='md:w-1/2 w-full  drop-shadow-2xl bg-[#f8f1ea] p-4 rounded-full border-t border-white mb-8 '>
           <div className='flex space-x-2'>
             <input 
